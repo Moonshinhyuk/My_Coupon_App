@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_manage_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="이름"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_manage_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="번호"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manage_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_manage_name" />
+
+    <TextView
+        android:id="@+id/tv_manage_coupon1_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="현금쿠폰 ="
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_name" />
+
+    <TextView
+        android:id="@+id/tv_manage_coupon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="현금쿠폰"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon1_" />
+
+    <TextView
+        android:id="@+id/tv_manage_coupon2_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="카드쿠폰 ="
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="@+id/btn_coupon1_plus"
+        app:layout_constraintTop_toBottomOf="@+id/btn_coupon1_plus" />
+
+    <TextView
+        android:id="@+id/tv_manage_coupon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="카드쿠폰"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_manage_coupon2_"
+        app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon2_" />
+
+    <Button
+        android:id="@+id/btn_coupon1_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="+1"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon1_" />
+
+    <Button
+        android:id="@+id/btn_coupon2_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="+1"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon2_"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon2_" />
+
+    <Button
+        android:id="@+id/btn_coupon2_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="-1"
+        app:layout_constraintStart_toEndOf="@+id/btn_coupon2_plus"
+        app:layout_constraintTop_toTopOf="@+id/btn_coupon2_plus" />
+
+    <Button
+        android:id="@+id/btn_coupon2_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="사용"
+        app:layout_constraintStart_toEndOf="@+id/btn_coupon2_minus"
+        app:layout_constraintTop_toTopOf="@+id/btn_coupon2_minus" />
+
+    <Button
+        android:id="@+id/btn_coupon1_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="-1"
+        app:layout_constraintStart_toEndOf="@+id/btn_coupon1_plus"
+        app:layout_constraintTop_toTopOf="@+id/btn_coupon1_plus" />
+
+    <Button
+        android:id="@+id/btn_coupon1_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="사용"
+        app:layout_constraintStart_toEndOf="@+id/btn_coupon1_minus"
+        app:layout_constraintTop_toTopOf="@+id/btn_coupon1_minus" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_coupon_save"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="#7C4DFF"
+            android:text="저장"
+            android:textColor="#FFFFFF"
+            tools:layout_editor_absoluteX="63dp"
+            tools:layout_editor_absoluteY="667dp" />
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="#448AFF"
+            android:text="초기화"
+            android:textColor="#FFFFFF" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
