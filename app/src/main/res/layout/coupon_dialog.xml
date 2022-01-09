@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#DADADA"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="+1"
+        android:background="@drawable/button_round"
         app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon1_"
         app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon1_" />
 
@@ -87,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="+1"
+        android:background="@drawable/button_round"
         app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon2_"
         app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon2_" />
 
@@ -95,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:background="@drawable/button_round"
         android:text="-1"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon2_plus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon2_plus" />
@@ -104,6 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:background="@drawable/button_round"
         android:text="사용"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon2_minus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon2_minus" />
@@ -113,6 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:background="@drawable/button_round"
         android:text="-1"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon1_plus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon1_plus" />
@@ -122,6 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:background="@drawable/button_round"
         android:text="사용"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon1_minus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon1_minus" />
@@ -142,7 +149,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
-            android:background="#7C4DFF"
+            android:background="@drawable/button_round"
             android:text="저장"
             android:textColor="#FFFFFF"
             tools:layout_editor_absoluteX="63dp"
@@ -152,10 +159,8 @@
             android:id="@+id/btn_reset"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="#448AFF"
+            android:background="@drawable/button_round"
             android:text="초기화"
             android:textColor="#FFFFFF" />
-
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

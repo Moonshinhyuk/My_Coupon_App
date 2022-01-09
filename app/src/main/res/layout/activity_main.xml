@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DADADA"
+    android:clipToPadding="false"
+    android:translationZ="-10dp"
     tools:context=".MainActivity">
 
     <!--tools:listitem="@layout/item_list" (리사이클러 뷰에 추가 시 실제로 어떤지 볼 수 있음)-->
@@ -29,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:background="#448AFF"
+        android:background="@drawable/button_round"
         android:text="삭제"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/btn_write"
@@ -41,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:background="#448AFF"
+        android:background="@drawable/button_round"
         android:text="추가"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,9 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:background="#536DFE"
+        android:background="@drawable/button_round"
         android:text="새로고침"
         android:textColor="#FFFFFF"
+        android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_delete"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -76,9 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="#536DFE"
+        android:background="@drawable/button_round"
         android:text="검색"
         android:textColor="#FFFFFF"
+        android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
