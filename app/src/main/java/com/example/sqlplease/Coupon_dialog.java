@@ -1,9 +1,11 @@
 package com.example.sqlplease;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Coupon_dialog extends MainActivity{
+
+    private DBHelper mDBHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,7 @@ public class Coupon_dialog extends MainActivity{
         Button btn_coupon2_use = findViewById(R.id.btn_coupon2_use);
         Button btn_coupon_save = findViewById(R.id.btn_coupon_save);
         Button btn_reset = findViewById(R.id.btn_reset);
+        Button btn_home = findViewById(R.id.btn_home);
 
 
         tv_manage_name.setText(name);
@@ -137,6 +143,8 @@ public class Coupon_dialog extends MainActivity{
                 Toast.makeText(Coupon_dialog.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -150,5 +158,60 @@ public class Coupon_dialog extends MainActivity{
             }
         });
 
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        tv_manage_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTextViewClicked(tv_manage_name);
+            }
+        });
+
+    }
+
+    public void onTextViewClicked(View view) {
+
+        mDBHelper = new DBHelper(this);
+
+        TextView tv_manage_name = findViewById(R.id.tv_manage_name);
+        TextView tv_manage_number = findViewById(R.id.tv_manage_number);
+        TextView tv_manage_coupon2 = findViewById(R.id.tv_manage_coupon2);
+        TextView tv_manage_coupon1 = findViewById(R.id.tv_manage_coupon1);
+        String name_ = tv_manage_name.getText().toString();
+        String number_ = tv_manage_number.getText().toString();
+        String coupon2 = tv_manage_coupon2.getText().toString();
+        String coupon1 = tv_manage_coupon1.getText().toString();
+
+        Dialog dialog = new Dialog(Coupon_dialog.this, android.R.style.Theme_Material_Light_Dialog);
+        dialog.setContentView(R.layout.dialog_edit2);
+
+        EditText et_change_name = dialog.findViewById(R.id.et_del_name);
+        EditText et_change_number = dialog.findViewById(R.id.et_del_number);
+        Button btn_change = dialog.findViewById(R.id.btn_del);
+
+        btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = et_change_name.getText().toString();
+                String number = et_change_number.getText().toString();
+
+                if(name.length() == 0) {
+                    name = name_;
+                }
+                else if(number.length() == 0) {
+                    number = number_;
+                }
+
+                mDBHelper.UpdateContent(name_, number_, coupon1, coupon2, name, number);
+            }
+        });
     }
 }

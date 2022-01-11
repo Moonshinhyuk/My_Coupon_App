@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         this.mContext = mContext;
         mDBHelper = new DBHelper(mContext);
     }
+
+
 
     @NonNull
     @Override
@@ -68,6 +71,31 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             tv_number = itemView.findViewById(R.id.tv_number);
             tv_coupon1 = itemView.findViewById(R.id.tv_coupon1);
             tv_coupon2 = itemView.findViewById(R.id.tv_coupon2);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int curPos = getAdapterPosition();
+                    CouponItem couponItem = mCouponItems.get(curPos);
+
+                    String name = couponItem.getName();
+                    String number = couponItem.getNumber();
+                    String coupon1 = couponItem.getCoupon1();
+                    String coupon2 = couponItem.getCoupon2();
+
+                    Intent intent = new Intent(mContext, Coupon_dialog.class);
+
+                    intent.putExtra("name", name);
+                    intent.putExtra("number", number);
+                    intent.putExtra("coupon1", coupon1);
+                    intent.putExtra("coupon2", coupon2);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    mContext.startActivity(intent);
+                }
+            });
 
         }
     }

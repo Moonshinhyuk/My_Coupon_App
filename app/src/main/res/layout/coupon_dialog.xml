@@ -2,43 +2,85 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#DADADA"
+    android:background="#FFF8E1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_manage_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        android:text="이름"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/frame"
+        android:elevation="20dp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:gravity="center"
+        android:text="문신혁"
+        android:onClick="onTextViewClicked"
+        android:clickable="true"
         android:textColor="#000000"
-        android:textSize="30sp"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="("
+        android:textColor="#000000"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manage_name"
+        app:layout_constraintEnd_toStartOf="@+id/tv_manage_number" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=")"
+        android:textSize="40sp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manage_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_manage_number" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="24dp"
+        android:background="#656565"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_name"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/tv_manage_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="번호"
+        android:layout_marginStart="16dp"
+        android:elevation="20dp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:gravity="center"
+        android:text="7901"
         android:textColor="#000000"
-        android:textSize="30sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_manage_name"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_manage_name" />
 
     <TextView
         android:id="@+id/tv_manage_coupon1_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="120dp"
+        android:fontFamily="@font/one_mobile_pop"
         android:text="현금쿠폰 ="
         android:textColor="#000000"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_manage_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_manage_name" />
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_coupon2_plus" />
 
     <TextView
         android:id="@+id/tv_manage_coupon1"
@@ -46,8 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="현금쿠폰"
+        android:fontFamily="@font/one_mobile_pop"
         android:textColor="#000000"
-        android:textSize="30dp"
+        android:textSize="50dp"
         app:layout_constraintStart_toEndOf="@+id/tv_manage_coupon1_"
         app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon1_" />
 
@@ -55,12 +98,13 @@
         android:id="@+id/tv_manage_coupon2_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/one_mobile_pop"
         android:text="카드쿠폰 ="
         android:textColor="#000000"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="@+id/btn_coupon1_plus"
-        app:layout_constraintTop_toBottomOf="@+id/btn_coupon1_plus" />
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
         android:id="@+id/tv_manage_coupon2"
@@ -68,68 +112,87 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="카드쿠폰"
+        android:fontFamily="@font/one_mobile_pop"
         android:textColor="#000000"
-        android:textSize="30dp"
+        android:textSize="50dp"
         app:layout_constraintStart_toEndOf="@+id/tv_manage_coupon2_"
         app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon2_" />
 
     <Button
         android:id="@+id/btn_coupon1_plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="+1"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_round"
+        android:fontFamily="@font/one_mobile_title"
+        android:text="+1"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
         app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon1_"
-        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon1_" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_coupon1_ex" />
 
     <Button
         android:id="@+id/btn_coupon2_plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="+1"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_round"
+        android:fontFamily="@font/one_mobile_title"
+        android:text="+1"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
         app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon2_"
-        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon2_" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_coupon1_ex2" />
 
     <Button
         android:id="@+id/btn_coupon2_minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/button_round"
+        android:fontFamily="@font/one_mobile_title"
         android:text="-1"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon2_plus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon2_plus" />
 
     <Button
         android:id="@+id/btn_coupon2_use"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:background="@drawable/button_round"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/button_use"
+        android:fontFamily="@font/one_mobile_title"
         android:text="사용"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon2_minus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon2_minus" />
 
     <Button
         android:id="@+id/btn_coupon1_minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/button_round"
+        android:fontFamily="@font/one_mobile_title"
         android:text="-1"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon1_plus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon1_plus" />
 
     <Button
         android:id="@+id/btn_coupon1_use"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:background="@drawable/button_round"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/button_use"
+        android:fontFamily="@font/one_mobile_title"
         android:text="사용"
+        android:textColor="#FFFFFF"
+        android:textSize="35dp"
         app:layout_constraintStart_toEndOf="@+id/btn_coupon1_minus"
         app:layout_constraintTop_toTopOf="@+id/btn_coupon1_minus" />
 
@@ -145,11 +208,26 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@drawable/button_use"
+            android:fontFamily="@font/one_mobile_title"
+            android:text="홈"
+            android:layout_marginRight="20dp"
+            android:textColor="#ffffff"
+            android:textSize="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
             android:id="@+id/btn_coupon_save"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_width="240dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_round"
+            android:textSize="45dp"
+            android:fontFamily="@font/one_mobile_title"
             android:text="저장"
             android:textColor="#FFFFFF"
             tools:layout_editor_absoluteX="63dp"
@@ -157,10 +235,51 @@
 
         <Button
             android:id="@+id/btn_reset"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="60dp"
+            android:textSize="45dp"
             android:background="@drawable/button_round"
+            android:fontFamily="@font/one_mobile_title"
             android:text="초기화"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintEnd_toStartOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon1_"
+        app:srcCompat="@drawable/cash" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manage_coupon2_"
+        app:layout_constraintEnd_toStartOf="@+id/tv_manage_coupon2_"
+        app:layout_constraintTop_toTopOf="@+id/tv_manage_coupon2_"
+        app:srcCompat="@drawable/credit_card" />
+
+    <TextView
+        android:id="@+id/tv_coupon1_ex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/one_mobile_pop"
+        android:text="10000원 할인"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon1_"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon1_" />
+
+    <TextView
+        android:id="@+id/tv_coupon1_ex2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/one_mobile_pop"
+        android:text="5000원 할인"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon2_"
+        app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon2_" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

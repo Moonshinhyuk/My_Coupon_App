@@ -64,6 +64,60 @@ public class DBHelper extends SQLiteOpenHelper {
         return couponItems;
     }
 
+    public ArrayList<ResultItem> getResultList1(String Number) {
+        ArrayList<ResultItem> resultItems = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE number='"+ Number +"'ORDER BY id DESC;", null);
+        if(cursor.getCount() != 0) {
+            while(cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString((cursor.getColumnIndexOrThrow("name")));
+                String number = cursor.getString((cursor.getColumnIndexOrThrow("number")));
+                String coupon1 = cursor.getString((cursor.getColumnIndexOrThrow("coupon1")));
+                String coupon2 = cursor.getString((cursor.getColumnIndexOrThrow("coupon2")));
+
+                ResultItem resultItem = new ResultItem();
+                resultItem.setId(id);
+                resultItem.setName(name);
+                resultItem.setNumber(number);
+                resultItem.setCoupon1(coupon1);
+                resultItem.setCoupon2(coupon2);
+                resultItems.add(resultItem);
+            }
+        }
+        cursor.close();
+
+        return resultItems;
+    }
+
+    public ArrayList<ResultItem> getResultList2(String Name) {
+        ArrayList<ResultItem> resultItems = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ Name +"'ORDER BY id DESC;", null);
+        if(cursor.getCount() != 0) {
+            while(cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString((cursor.getColumnIndexOrThrow("name")));
+                String number = cursor.getString((cursor.getColumnIndexOrThrow("number")));
+                String coupon1 = cursor.getString((cursor.getColumnIndexOrThrow("coupon1")));
+                String coupon2 = cursor.getString((cursor.getColumnIndexOrThrow("coupon2")));
+
+                ResultItem resultItem = new ResultItem();
+                resultItem.setId(id);
+                resultItem.setName(name);
+                resultItem.setNumber(number);
+                resultItem.setCoupon1(coupon1);
+                resultItem.setCoupon2(coupon2);
+                resultItems.add(resultItem);
+            }
+        }
+        cursor.close();
+
+        return resultItems;
+    }
+
     public List getCouponNum(String _name, String _number) {
         List items = new ArrayList<>();
 

@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-
         setInit();
     }
 
@@ -60,9 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 String name = et_search_name.getText().toString();
                 String number = et_search_number.getText().toString();
 
-                Intent intent = new Intent(getApplicationContext(), Coupon_dialog.class);
+                Intent intent = new Intent(getApplicationContext(), Search_result.class);
                 intent.putExtra("name", name);
                 intent.putExtra("number", number);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
                 et_search_name.setText("");
@@ -122,19 +122,30 @@ public class MainActivity extends AppCompatActivity {
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        String name = et_name.getText().toString();
+                        String number = et_number.getText().toString();
+                        String coupon1 = et_coupon1.getText().toString();
+                        String coupon2 = et_coupon2.getText().toString();
+
+                        if(coupon1.length() == 0) {
+                            coupon1 = "0";
+                        }
+                        else if(coupon2.length() == 0) {
+                            coupon2 = "0";
+                        }
 
                         //Insert Database
-                        mDBHelper.InsertContent(et_name.getText().toString(),
-                                et_number.getText().toString(),
-                                et_coupon1.getText().toString(),
-                                et_coupon2.getText().toString());
+                        mDBHelper.InsertContent(name,
+                                number,
+                                coupon1,
+                                coupon2);
 
                         //Insert UI
                         CouponItem item = new CouponItem();
-                        item.setName(et_name.getText().toString());
-                        item.setNumber(et_number.getText().toString());
-                        item.setCoupon1(et_coupon1.getText().toString());
-                        item.setCoupon2(et_coupon2.getText().toString());
+                        item.setName(name);
+                        item.setNumber(number);
+                        item.setCoupon1(coupon1);
+                        item.setCoupon2(coupon2);
 
                         mAdapter.addItem(item);
 
