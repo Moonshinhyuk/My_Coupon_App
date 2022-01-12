@@ -35,6 +35,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    public int getCouponCount() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList ORDER BY id DESC", null);
+        int count = cursor.getCount();
+
+        return count;
+    }
+
     // SELECT 문 (쿠폰 목록 조회)
     public ArrayList<CouponItem> getCouponList() {
         ArrayList<CouponItem> couponItems = new ArrayList<>();
@@ -118,6 +126,33 @@ public class DBHelper extends SQLiteOpenHelper {
         return resultItems;
     }
 
+    public ArrayList<ResultItem> getResultList3(String Name, String Number) {
+        ArrayList<ResultItem> resultItems = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ Name +"' AND number='"+ Number +"'ORDER BY id DESC;", null);
+        if(cursor.getCount() != 0) {
+            while(cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString((cursor.getColumnIndexOrThrow("name")));
+                String number = cursor.getString((cursor.getColumnIndexOrThrow("number")));
+                String coupon1 = cursor.getString((cursor.getColumnIndexOrThrow("coupon1")));
+                String coupon2 = cursor.getString((cursor.getColumnIndexOrThrow("coupon2")));
+
+                ResultItem resultItem = new ResultItem();
+                resultItem.setId(id);
+                resultItem.setName(name);
+                resultItem.setNumber(number);
+                resultItem.setCoupon1(coupon1);
+                resultItem.setCoupon2(coupon2);
+                resultItems.add(resultItem);
+            }
+        }
+        cursor.close();
+
+        return resultItems;
+    }
+
     public List getCouponNum(String _name, String _number) {
         List items = new ArrayList<>();
 
@@ -165,6 +200,23 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM CouponList " +
                 "WHERE name='" + insertName + "' AND number='" + insertNumber + "';");
+    }
+
+    public boolean CheckContent(String _name, String _number) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ _name +"' AND number='"+ _number +"';", null);
+
+        Boolean bool;
+
+        if(cursor.getCount() != 0) {
+            bool = true;
+        }
+        else {
+            bool = false;
+        }
+
+        return bool;
     }
 
 }

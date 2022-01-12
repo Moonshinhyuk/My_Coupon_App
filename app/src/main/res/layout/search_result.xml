@@ -24,5 +24,17 @@
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_list" />
 
+    <Button
+        android:id="@+id/btn_home_result"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="홈"
+        android:textSize="40dp"
+        android:fontFamily="@font/one_mobile_title"
+        android:background="@drawable/button_use"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="249dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

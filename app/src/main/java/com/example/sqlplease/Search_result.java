@@ -2,6 +2,8 @@ package com.example.sqlplease;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ public class Search_result extends AppCompatActivity {
     private ArrayList<ResultItem> mResultItems;
     private DBHelper mDBHelper;
     private CustomAdapter2 mAdapter;
+    Button btn_home_result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,31 @@ public class Search_result extends AppCompatActivity {
         else if(name.length() != 0 && number.length() == 0){
             setInit2(name);
         }
+        else {
+            setInit3(name, number);
+        }
+
+        btn_home_result = findViewById(R.id.btn_home_result);
+
+        btn_home_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    private void setInit1(String number) {
+        mDBHelper = new DBHelper(this);
+
+        mRv_result = findViewById(R.id.rv_result);
+        mResultItems = new ArrayList<>();
+
+        LoadRecentDB1(number);
     }
 
     private void setInit2(String name) {
@@ -41,13 +69,13 @@ public class Search_result extends AppCompatActivity {
         LoadRecentDB2(name);
     }
 
-    private void setInit1(String number) {
+    private void setInit3(String name, String number) {
         mDBHelper = new DBHelper(this);
 
         mRv_result = findViewById(R.id.rv_result);
         mResultItems = new ArrayList<>();
 
-        LoadRecentDB1(number);
+        LoadRecentDB3(name, number);
     }
 
     private void LoadRecentDB1(String number) {
@@ -65,7 +93,10 @@ public class Search_result extends AppCompatActivity {
         mRv_result.setAdapter(mAdapter);
     }
 
-//    private void LoadRecentDB3(String name, String number) {
-//        mResultItems = mDBHelper.
-//    }
+    private void LoadRecentDB3(String name, String number) {
+        mResultItems = mDBHelper.getResultList3(name, number);
+        mAdapter = new CustomAdapter2(mResultItems, this);
+        mRv_result.setHasFixedSize(true);
+        mRv_result.setAdapter(mAdapter);
+    }
 }

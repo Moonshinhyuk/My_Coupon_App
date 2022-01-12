@@ -83,9 +83,6 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
                     intent.putExtra("coupon1", coupon1);
                     intent.putExtra("coupon2", coupon2);
 
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                     mContext.startActivity(intent);
                 }
             });

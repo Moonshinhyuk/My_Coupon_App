@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mBtn_delete;
     private Button mBtn_reload;
     private Button mBtn_search;
+    private TextView mTv_count;
     private ArrayList<CouponItem> mCouponItems;
     private DBHelper mDBHelper;
     private CustomAdapter mAdapter;
@@ -36,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
         setInit();
     }
 
+    public static Comparator<CouponItem> Compare = new Comparator<CouponItem>() {
+        @Override
+        public int compare(CouponItem t1, CouponItem t2) {
+            return t1.getName().compareTo(t2.getName());
+        }
+    };
+
     private void setInit() {
         mDBHelper = new DBHelper(this);
 
@@ -44,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
         mBtn_delete = findViewById(R.id.btn_delete);
         mBtn_reload = findViewById(R.id.btn_reload);
         mBtn_search = findViewById(R.id.btn_search);
+        mTv_count = findViewById(R.id.tv_count);
         mCouponItems = new ArrayList<>();
 
         // load recent db
         LoadRecentDB();
+        setCount();
 
         mBtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LoadRecentDB();
+                setCount();
 
                 Toast.makeText(MainActivity.this, "새로고침이 완료 되었습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -99,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Toast.makeText(MainActivity.this, "목록 삭제가 완료 되었습니다", Toast.LENGTH_SHORT).show();
                         LoadRecentDB();
+                        setCount();
                     }
                 });
 
@@ -127,31 +142,40 @@ public class MainActivity extends AppCompatActivity {
                         String coupon1 = et_coupon1.getText().toString();
                         String coupon2 = et_coupon2.getText().toString();
 
-                        if(coupon1.length() == 0) {
-                            coupon1 = "0";
+                        Boolean bool = mDBHelper.CheckContent(name, number);
+
+                        if(bool == false) {
+                            if(coupon1.length() == 0) {
+                                coupon1 = "0";
+                            }
+                            if(coupon2.length() == 0) {
+                                coupon2 = "0";
+                            }
+
+                            //Insert Database
+                            mDBHelper.InsertContent(name,
+                                    number,
+                                    coupon1,
+                                    coupon2);
+
+                            //Insert UI
+                            CouponItem item = new CouponItem();
+                            item.setName(name);
+                            item.setNumber(number);
+                            item.setCoupon1(coupon1);
+                            item.setCoupon2(coupon2);
+
+                            mAdapter.addItem(item);
+
+                            mRv_coupon.smoothScrollToPosition(0);
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this, "목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
                         }
-                        else if(coupon2.length() == 0) {
-                            coupon2 = "0";
+                        else {
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this, "이미 있는 이름, 번호 입니다.", Toast.LENGTH_SHORT).show();
                         }
-
-                        //Insert Database
-                        mDBHelper.InsertContent(name,
-                                number,
-                                coupon1,
-                                coupon2);
-
-                        //Insert UI
-                        CouponItem item = new CouponItem();
-                        item.setName(name);
-                        item.setNumber(number);
-                        item.setCoupon1(coupon1);
-                        item.setCoupon2(coupon2);
-
-                        mAdapter.addItem(item);
-
-                        mRv_coupon.smoothScrollToPosition(0);
-                        dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                        setCount();
 
                     }
                 });
@@ -163,8 +187,15 @@ public class MainActivity extends AppCompatActivity {
     private void LoadRecentDB() {
         // 저장 되어있던 데이터를 가져옴
         mCouponItems = mDBHelper.getCouponList();
+        Collections.sort(mCouponItems, Compare);
         mAdapter = new CustomAdapter(mCouponItems, this);
         mRv_coupon.setHasFixedSize(true);
         mRv_coupon.setAdapter(mAdapter);
+    }
+
+    private void setCount() {
+        int count = mDBHelper.getCouponCount();
+        String count_Text = Integer.toString(count);
+        mTv_count.setText(count_Text);
     }
 }

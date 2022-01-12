@@ -9,6 +9,10 @@ public class CouponItem {
 
 
     public CouponItem() {
+        this.name = name;
+        this.number =number;
+        this.coupon1 = coupon1;
+        this.coupon2 = coupon2;
     }
 
     public int getId() {
@@ -50,4 +54,5 @@ public class CouponItem {
     public void setCoupon2(String coupon2) {
         this.coupon2 = coupon2;
     }
+
 }

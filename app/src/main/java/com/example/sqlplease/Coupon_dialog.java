@@ -40,11 +40,11 @@ public class Coupon_dialog extends MainActivity{
         Button btn_reset = findViewById(R.id.btn_reset);
         Button btn_home = findViewById(R.id.btn_home);
 
+        mDBHelper = new DBHelper(this);
 
         tv_manage_name.setText(name);
         tv_manage_number.setText(number);
 
-        DBHelper mDBHelper = new DBHelper(this);
 
         List couponNumbers = new ArrayList<>();
         couponNumbers = mDBHelper.getCouponNum(name, number);
@@ -171,47 +171,58 @@ public class Coupon_dialog extends MainActivity{
         tv_manage_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onTextViewClicked(tv_manage_name);
+
+                TextView tv_manage_name = findViewById(R.id.tv_manage_name);
+                TextView tv_manage_number = findViewById(R.id.tv_manage_number);
+                TextView tv_manage_coupon2 = findViewById(R.id.tv_manage_coupon2);
+                TextView tv_manage_coupon1 = findViewById(R.id.tv_manage_coupon1);
+                String name_ = tv_manage_name.getText().toString();
+                String number_ = tv_manage_number.getText().toString();
+                String coupon2 = tv_manage_coupon2.getText().toString();
+                String coupon1 = tv_manage_coupon1.getText().toString();
+
+                Dialog dialog = new Dialog(Coupon_dialog.this, android.R.style.Theme_Material_Light_Dialog);
+                dialog.setContentView(R.layout.dialog_edit2);
+
+                EditText et_change_name = dialog.findViewById(R.id.et_del_name);
+                EditText et_change_number = dialog.findViewById(R.id.et_del_number);
+                Button btn_change = dialog.findViewById(R.id.btn_del);
+
+                btn_change.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String name = et_change_name.getText().toString();
+                        String number = et_change_number.getText().toString();
+
+                        Boolean bool = mDBHelper.CheckContent(name, number);
+
+                        if(bool == false) {
+                            if(name.length() == 0) {
+                                name = name_;
+                            }
+                            if(number.length() == 0) {
+                                number = number_;
+                            }
+
+                            mDBHelper.UpdateContent(name, number, coupon1, coupon2, name_, number_);
+
+                            dialog.dismiss();
+
+                            tv_manage_name.setText(name);
+                            tv_manage_number.setText(number);
+
+                            Toast.makeText(Coupon_dialog.this, "변경 완료.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            dialog.dismiss();
+                            Toast.makeText(Coupon_dialog.this, "이미 있는 이름, 번호 입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                dialog.show();
             }
         });
 
-    }
-
-    public void onTextViewClicked(View view) {
-
-        mDBHelper = new DBHelper(this);
-
-        TextView tv_manage_name = findViewById(R.id.tv_manage_name);
-        TextView tv_manage_number = findViewById(R.id.tv_manage_number);
-        TextView tv_manage_coupon2 = findViewById(R.id.tv_manage_coupon2);
-        TextView tv_manage_coupon1 = findViewById(R.id.tv_manage_coupon1);
-        String name_ = tv_manage_name.getText().toString();
-        String number_ = tv_manage_number.getText().toString();
-        String coupon2 = tv_manage_coupon2.getText().toString();
-        String coupon1 = tv_manage_coupon1.getText().toString();
-
-        Dialog dialog = new Dialog(Coupon_dialog.this, android.R.style.Theme_Material_Light_Dialog);
-        dialog.setContentView(R.layout.dialog_edit2);
-
-        EditText et_change_name = dialog.findViewById(R.id.et_del_name);
-        EditText et_change_number = dialog.findViewById(R.id.et_del_number);
-        Button btn_change = dialog.findViewById(R.id.btn_del);
-
-        btn_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = et_change_name.getText().toString();
-                String number = et_change_number.getText().toString();
-
-                if(name.length() == 0) {
-                    name = name_;
-                }
-                else if(number.length() == 0) {
-                    number = number_;
-                }
-
-                mDBHelper.UpdateContent(name_, number_, coupon1, coupon2, name, number);
-            }
-        });
     }
 }
