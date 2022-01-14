@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Search_result extends AppCompatActivity {
 
@@ -50,6 +52,13 @@ public class Search_result extends AppCompatActivity {
         });
     }
 
+    public static Comparator<ResultItem> Compare = new Comparator<ResultItem>() {
+        @Override
+        public int compare(ResultItem t1, ResultItem t2) {
+            return t1.getName().compareTo(t2.getName());
+        }
+    };
+
 
     private void setInit1(String number) {
         mDBHelper = new DBHelper(this);
@@ -81,6 +90,7 @@ public class Search_result extends AppCompatActivity {
     private void LoadRecentDB1(String number) {
         // 저장 되어있던 데이터를 가져옴
         mResultItems = mDBHelper.getResultList1(number);
+        Collections.sort(mResultItems, Compare);
         mAdapter = new CustomAdapter2(mResultItems, this);
         mRv_result.setHasFixedSize(true);
         mRv_result.setAdapter(mAdapter);
@@ -88,6 +98,7 @@ public class Search_result extends AppCompatActivity {
 
     private void LoadRecentDB2(String name) {
         mResultItems = mDBHelper.getResultList2(name);
+        Collections.sort(mResultItems, Compare);
         mAdapter = new CustomAdapter2(mResultItems, this);
         mRv_result.setHasFixedSize(true);
         mRv_result.setAdapter(mAdapter);
@@ -95,6 +106,7 @@ public class Search_result extends AppCompatActivity {
 
     private void LoadRecentDB3(String name, String number) {
         mResultItems = mDBHelper.getResultList3(name, number);
+        Collections.sort(mResultItems, Compare);
         mAdapter = new CustomAdapter2(mResultItems, this);
         mRv_result.setHasFixedSize(true);
         mRv_result.setAdapter(mAdapter);

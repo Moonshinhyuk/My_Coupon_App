@@ -1,13 +1,18 @@
 package com.example.sqlplease;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +20,8 @@ import java.util.List;
 public class Coupon_dialog extends MainActivity{
 
     private DBHelper mDBHelper;
+    Animation anim;
+    Animation anim_stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,23 @@ public class Coupon_dialog extends MainActivity{
         tv_manage_coupon1.setText(coupon1);
         tv_manage_coupon2.setText(coupon2);
 
+        anim = new AlphaAnimation(0.0f,1.0f);
+        anim.setDuration(100);
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+
+
+        if(Integer.parseInt(tv_manage_coupon1.getText().toString()) >= 10) {
+            btn_coupon1_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use2));
+            btn_coupon1_use.startAnimation(anim);
+        }
+        if(Integer.parseInt(tv_manage_coupon2.getText().toString()) >= 10) {
+            btn_coupon2_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use2));
+            btn_coupon2_use.startAnimation(anim);
+        }
+
+
 
         btn_coupon1_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +111,10 @@ public class Coupon_dialog extends MainActivity{
                     coupon = coupon - 10;
                     String coupon_ = Integer.toString(coupon);
                     tv_manage_coupon1.setText(coupon_);
+                    if(coupon < 10) {
+                        btn_coupon1_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use));
+                        btn_coupon1_use.clearAnimation();
+                    }
                 }
                 else {
                     Toast.makeText(Coupon_dialog.this, "쿠폰을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -126,6 +154,10 @@ public class Coupon_dialog extends MainActivity{
                     coupon = coupon - 10;
                     String coupon_ = Integer.toString(coupon);
                     tv_manage_coupon2.setText(coupon_);
+                    if(coupon < 10) {
+                        btn_coupon2_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use));
+                        btn_coupon2_use.clearAnimation();
+                    }
                 }
                 else {
                     Toast.makeText(Coupon_dialog.this, "쿠폰을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -154,6 +186,15 @@ public class Coupon_dialog extends MainActivity{
             public void onClick(View view) {
                 tv_manage_coupon1.setText(coupon1);
                 tv_manage_coupon2.setText(coupon2);
+                if(Integer.parseInt(tv_manage_coupon1.getText().toString()) >= 10) {
+                    btn_coupon1_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use2));
+                    btn_coupon1_use.startAnimation(anim);
+                }
+                if(Integer.parseInt(tv_manage_coupon2.getText().toString()) >= 10) {
+                    btn_coupon2_use.setBackground(ContextCompat.getDrawable(Coupon_dialog.this, R.drawable.button_use2));
+                    btn_coupon2_use.startAnimation(anim);
+                }
+
                 Toast.makeText(Coupon_dialog.this, "초기화 되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });

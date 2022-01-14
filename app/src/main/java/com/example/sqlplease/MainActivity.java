@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mBtn_delete;
     private Button mBtn_reload;
     private Button mBtn_search;
+    private List<String> list;
     private TextView mTv_count;
     private ArrayList<CouponItem> mCouponItems;
     private DBHelper mDBHelper;
@@ -62,10 +66,19 @@ public class MainActivity extends AppCompatActivity {
         LoadRecentDB();
         setCount();
 
+        list = new ArrayList<String>();
+
+        settingList();
+
+        final AutoCompleteTextView autocompleteTextview = (AutoCompleteTextView) findViewById(R.id.et_search_name);
+
+        autocompleteTextview.setAdapter(new ArrayAdapter<String>(this, R.layout.search_suggest, list));
+
+
         mBtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText et_search_name = findViewById(R.id.et_search_name);
+                AutoCompleteTextView et_search_name = findViewById(R.id.et_search_name);
                 EditText et_search_number = findViewById(R.id.et_search_number);
 
                 String name = et_search_name.getText().toString();
@@ -197,5 +210,10 @@ public class MainActivity extends AppCompatActivity {
         int count = mDBHelper.getCouponCount();
         String count_Text = Integer.toString(count);
         mTv_count.setText(count_Text);
+    }
+
+    private void settingList() {
+        list = mDBHelper.getCouponName();
+        Collections.sort(list);
     }
 }

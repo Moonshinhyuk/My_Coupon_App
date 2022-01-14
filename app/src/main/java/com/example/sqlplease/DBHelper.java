@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<ResultItem> resultItems = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ Name +"'ORDER BY id DESC;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name LIKE '%"+ Name +"%' ORDER BY id DESC;", null);
         if(cursor.getCount() != 0) {
             while(cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
@@ -171,6 +171,23 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return items;
+    }
+
+    public List<String> getCouponName() {
+        List<String> names = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CouponList ORDER BY id DESC", null);
+        if(cursor.getCount() != 0) {
+            //조회 데이터가 있을 때 내부 수행
+            while(cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                names.add(name);
+            }
+        }
+        cursor.close();
+
+        return names;
     }
 
 
