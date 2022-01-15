@@ -9,6 +9,6 @@
     android:textSize="40dp"
     android:fontFamily="@font/one_mobile_title"
     android:textColor="#000000"
-    android:text="gd"
+    android:text=""
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:ellipsize="marquee" />

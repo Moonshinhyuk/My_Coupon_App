@@ -44,6 +44,7 @@ public class Coupon_dialog extends MainActivity{
         Button btn_coupon2_minus = findViewById(R.id.btn_coupon2_minus);
         Button btn_coupon2_use = findViewById(R.id.btn_coupon2_use);
         Button btn_coupon_save = findViewById(R.id.btn_coupon_save);
+//        Button btn_save2 = findViewById(R.id.btn_save2);
         Button btn_reset = findViewById(R.id.btn_reset);
         Button btn_home = findViewById(R.id.btn_home);
 
@@ -174,10 +175,10 @@ public class Coupon_dialog extends MainActivity{
                 mDBHelper.UpdateContent(name, number, coupon1_, coupon2_, name, number);
                 Toast.makeText(Coupon_dialog.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
             }
         });
 
@@ -264,6 +265,17 @@ public class Coupon_dialog extends MainActivity{
                 dialog.show();
             }
         });
+
+//        btn_save2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String coupon1_ = tv_manage_coupon1.getText().toString();
+//                String coupon2_ = tv_manage_coupon2.getText().toString();
+//
+//                mDBHelper.UpdateContent(name, number, coupon1_, coupon2_, name, number);
+//                Toast.makeText(Coupon_dialog.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 }
