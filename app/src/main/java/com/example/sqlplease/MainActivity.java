@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         LoadRecentDB();
         setCount();
 
+        mDBHelper.InitLog();
+
         list = new ArrayList<String>();
 
         settingList();

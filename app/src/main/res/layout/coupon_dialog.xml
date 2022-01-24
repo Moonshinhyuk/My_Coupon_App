@@ -282,4 +282,35 @@
         app:layout_constraintStart_toStartOf="@+id/tv_manage_coupon2_"
         app:layout_constraintTop_toBottomOf="@+id/tv_manage_coupon2_" />
 
+    <TextView
+        android:id="@+id/tv_use_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="내역"
+        android:textSize="25dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_log_explain"
+        app:layout_constraintTop_toTopOf="@+id/tv_log_explain" />
+
+    <TextView
+        android:id="@+id/tv_log_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="사용 내역= "
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="날짜"
+        android:textSize="25dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_use_log"
+        app:layout_constraintTop_toTopOf="@+id/tv_log_explain" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

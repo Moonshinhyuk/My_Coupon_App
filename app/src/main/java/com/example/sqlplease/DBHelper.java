@@ -26,12 +26,39 @@ public class DBHelper extends SQLiteOpenHelper {
         // 데이터 베이스가 생성이 될 때 호출
         // 데이터베이스 -> 테이블 -> 컬럼 -> 값
         db.execSQL("CREATE TABLE IF NOT EXISTS CouponList (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, number TEXT NOT NULL, coupon1 TEXT NOT NULL, coupon2 TEXT NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS UseLog (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL, number TEXT NOT NULL, use TEXT, plus TEXT, date TEXT);");
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
+    }
+
+
+    public void UpdateLog(String _name, String _number, String _use, String _plus, String _date) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE UseLog SET use = '"+ _use +"', plus = '"+ _plus +"', date = '"+ _date +"' WHERE name = '"+ _name +"' AND number = '"+ _number +"';");
+    }
+
+
+    public void InitLog() {
+        SQLiteDatabase db = getWritableDatabase();
+        List Content = new ArrayList<>();
+        Content = getCouponContent();
+        int Repeat = Content.size();
+
+        for (int i = 0; i < Repeat; i++){
+            List list = (List) Content.get(i);
+            String name = (String) list.get(0);
+            String number = (String) list.get(1);
+
+            Boolean bool = CheckLogContent(name, number);
+
+            if(bool == false) {
+                db.execSQL("INSERT INTO UseLog (name, number) VALUES('"+ name +"', '"+ number +"');");
+            }
+        }
     }
 
 
@@ -173,6 +200,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    public List getCouponContent() {
+        List item = new ArrayList<>();
+        List items = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name, number FROM CouponList;", null);
+        if(cursor.getCount() != 0) {
+            //조회 데이터가 있을 때 내부 수행
+            while(cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String number = cursor.getString(cursor.getColumnIndexOrThrow("number"));
+
+                item.add(name);
+                item.add(number);
+                items.add(item);
+            }
+        }
+        cursor.close();
+
+        return items;
+    }
+
     public List<String> getCouponName() {
         List<String> names = new ArrayList<>();
 
@@ -223,6 +272,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ _name +"' AND number='"+ _number +"';", null);
+
+        Boolean bool;
+
+        if(cursor.getCount() != 0) {
+            bool = true;
+        }
+        else {
+            bool = false;
+        }
+
+        return bool;
+    }
+
+    public boolean CheckLogContent(String _name, String _number) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM UseLog WHERE name='"+ _name +"' AND number='"+ _number +"';", null);
 
         Boolean bool;
 
