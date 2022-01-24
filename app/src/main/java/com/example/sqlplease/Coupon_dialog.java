@@ -21,7 +21,6 @@ public class Coupon_dialog extends MainActivity{
 
     private DBHelper mDBHelper;
     Animation anim;
-    Animation anim_stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +35,8 @@ public class Coupon_dialog extends MainActivity{
         TextView tv_manage_number = findViewById(R.id.tv_manage_number);
         TextView tv_manage_coupon1 = findViewById(R.id.tv_manage_coupon1);
         TextView tv_manage_coupon2 = findViewById(R.id.tv_manage_coupon2);
+        TextView tv_use_log = findViewById(R.id.tv_use_log);
+        TextView tv_use_date = findViewById(R.id.tv_use_date);
 
         Button btn_coupon1_plus = findViewById(R.id.btn_coupon1_plus);
         Button btn_coupon1_minus = findViewById(R.id.btn_coupon1_minus);
@@ -50,10 +51,11 @@ public class Coupon_dialog extends MainActivity{
 
         mDBHelper = new DBHelper(this);
 
+//이름 번호 설정
         tv_manage_name.setText(name);
         tv_manage_number.setText(number);
 
-
+//카드쿠폰 현금쿠폰 불러오고 설정
         List couponNumbers = new ArrayList<>();
         couponNumbers = mDBHelper.getCouponNum(name, number);
         String coupon1 = (String) couponNumbers.get(0);
@@ -61,6 +63,35 @@ public class Coupon_dialog extends MainActivity{
 
         tv_manage_coupon1.setText(coupon1);
         tv_manage_coupon2.setText(coupon2);
+
+//쿠폰 사용내역 및 추가내역 불러오고 설정
+        List UseLog = new ArrayList<>();
+        UseLog = mDBHelper.CheckLog(name, number);
+
+        String use = (String) UseLog.get(0);
+        String plus = (String) UseLog.get(1);
+        String date = (String) UseLog.get(2);
+
+        String result = "";
+        String result_date = "";
+
+        if(use == null && plus == null) {
+            result = "내역이 없습니다.";
+            result_date = "";
+        }
+        else if(use != null && plus == null) {
+            result = "에 사용";
+            result_date = date;
+        }
+        else if(use == null && plus != null) {
+            result = String.format("에 %s개 추가함", plus);
+            result_date = date;
+        }
+
+        tv_use_log.setText(result);
+        tv_use_date.setText(result_date);
+
+
 
         anim = new AlphaAnimation(0.0f,1.0f);
         anim.setDuration(100);

@@ -41,6 +41,27 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE UseLog SET use = '"+ _use +"', plus = '"+ _plus +"', date = '"+ _date +"' WHERE name = '"+ _name +"' AND number = '"+ _number +"';");
     }
 
+    public List CheckLog(String _name, String _number) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT use, plus, date FROM UseLog WHERE name = '"+ _name +"' AND number = '"+ _number+"';", null);
+
+        List item = new ArrayList<>();
+        if(cursor.getCount() != 0) {
+            //조회 데이터가 있을 때 내부 수행
+            while(cursor.moveToNext()) {
+                String use = cursor.getString(cursor.getColumnIndexOrThrow("use"));
+                String plus = cursor.getString(cursor.getColumnIndexOrThrow("plus"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+
+                item.add(use);
+                item.add(plus);
+                item.add(date);
+            }
+        }
+
+        return item;
+    }
+
 
     public void InitLog() {
         SQLiteDatabase db = getWritableDatabase();

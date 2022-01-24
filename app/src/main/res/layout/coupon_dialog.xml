@@ -289,7 +289,7 @@
         android:layout_marginStart="8dp"
         android:text="내역"
         android:textSize="25dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_log_explain"
+        app:layout_constraintStart_toEndOf="@+id/tv_use_date"
         app:layout_constraintTop_toTopOf="@+id/tv_log_explain" />
 
     <TextView
@@ -304,13 +304,13 @@
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_use_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="날짜"
         android:textSize="25dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_use_log"
+        app:layout_constraintStart_toEndOf="@+id/tv_log_explain"
         app:layout_constraintTop_toTopOf="@+id/tv_log_explain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
