@@ -26,7 +26,6 @@ public class DBHelper extends SQLiteOpenHelper {
         // 데이터 베이스가 생성이 될 때 호출
         // 데이터베이스 -> 테이블 -> 컬럼 -> 값
         db.execSQL("CREATE TABLE IF NOT EXISTS CouponList (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, number TEXT NOT NULL, coupon1 TEXT NOT NULL, coupon2 TEXT NOT NULL);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS UseLog (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL, number TEXT NOT NULL, use TEXT, plus TEXT, date TEXT);");
     }
 
 
@@ -36,60 +35,32 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void UpdateLog(String _name, String _number, String _use, String _plus, String _date) {
+    //회원 이름 번호를 가진 사용내역 테이블이 없다면 새로 생성해주는 함수
+    public void CreateLogTable(String _name, String _number) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE UseLog SET use = '"+ _use +"', plus = '"+ _plus +"', date = '"+ _date +"' WHERE name = '"+ _name +"' AND number = '"+ _number +"';");
-    }
-
-    public List CheckLog(String _name, String _number) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT use, plus, date FROM UseLog WHERE name = '"+ _name +"' AND number = '"+ _number+"';", null);
-
-        List item = new ArrayList<>();
-        if(cursor.getCount() != 0) {
-            //조회 데이터가 있을 때 내부 수행
-            while(cursor.moveToNext()) {
-                String use = cursor.getString(cursor.getColumnIndexOrThrow("use"));
-                String plus = cursor.getString(cursor.getColumnIndexOrThrow("plus"));
-                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
-
-                item.add(use);
-                item.add(plus);
-                item.add(date);
-            }
-        }
-
-        return item;
+        String sql = "CREATE TABLE IF NOT EXISTS " + _name + _number + " (id INTEGER PRIMARY KEY AUTOINCREMENT, use1 TEXT, use2 TEXT, plus1 TEXT, plus2 TEXT, date TEXT);";
+        db.execSQL(sql);
     }
 
 
-    public void InitLog() {
+    //회원 이름 번호 테이블에 사용내역 저장하는 함수.
+    public void InsertLogTable(String _name, String _number, String _use1, String _use2, String _plus1, String _plus2, String _date) {
         SQLiteDatabase db = getWritableDatabase();
-        List Content = new ArrayList<>();
-        Content = getCouponContent();
-        int Repeat = Content.size();
-
-        for (int i = 0; i < Repeat; i++){
-            List list = (List) Content.get(i);
-            String name = (String) list.get(0);
-            String number = (String) list.get(1);
-
-            Boolean bool = CheckLogContent(name, number);
-
-            if(bool == false) {
-                db.execSQL("INSERT INTO UseLog (name, number) VALUES('"+ name +"', '"+ number +"');");
-            }
-        }
+        String sql = "INSERT INTO " + _name + _number + " (use1, use2, plus1, plus2, date) VALUES('" + _use1 + "', '" + _use2 + "', '" + _plus1 + "', '" + _plus2 + "', '" + _date + "');";
+        db.execSQL(sql);
     }
 
 
+    //쿠폰 갯수 구하는 함수
     public int getCouponCount() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM CouponList ORDER BY id DESC", null);
         int count = cursor.getCount();
+        cursor.close();
 
         return count;
     }
+
 
     // SELECT 문 (쿠폰 목록 조회)
     public ArrayList<CouponItem> getCouponList() {
@@ -120,6 +91,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return couponItems;
     }
 
+
+    //번호로 검색할 시 검색결과 리스트 불러오기
     public ArrayList<ResultItem> getResultList1(String Number) {
         ArrayList<ResultItem> resultItems = new ArrayList<>();
 
@@ -147,6 +120,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return resultItems;
     }
 
+
+    //이름으로 검색할 시 검색결과 리스트 불러오기
     public ArrayList<ResultItem> getResultList2(String Name) {
         ArrayList<ResultItem> resultItems = new ArrayList<>();
 
@@ -174,6 +149,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return resultItems;
     }
 
+
+    //이름, 번호 둘다로 검색할 시 검색결과 리스트 불러오기
     public ArrayList<ResultItem> getResultList3(String Name, String Number) {
         ArrayList<ResultItem> resultItems = new ArrayList<>();
 
@@ -201,6 +178,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return resultItems;
     }
 
+
+    //입력 이름, 번호에 따른 현금쿠폰, 카드쿠폰 도장 갯수 리스트에 저장해 리턴
     public List getCouponNum(String _name, String _number) {
         List items = new ArrayList<>();
 
@@ -221,28 +200,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return items;
     }
 
-    public List getCouponContent() {
-        List item = new ArrayList<>();
-        List items = new ArrayList<>();
 
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT name, number FROM CouponList;", null);
-        if(cursor.getCount() != 0) {
-            //조회 데이터가 있을 때 내부 수행
-            while(cursor.moveToNext()) {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                String number = cursor.getString(cursor.getColumnIndexOrThrow("number"));
-
-                item.add(name);
-                item.add(number);
-                items.add(item);
-            }
-        }
-        cursor.close();
-
-        return items;
-    }
-
+    //리사이클러뷰 가나다순 정렬에 쓰일 이름 리스트를 리턴
     public List<String> getCouponName() {
         List<String> names = new ArrayList<>();
 
@@ -275,11 +234,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE CouponList SET name='" + _name + "', number='" + _number + "', coupon1='" + _coupon1 + "', coupon2='" + _coupon2 + "' WHERE name='" + insertName + "' AND number='" + insertNumber + "';");
     }
 
-    public void UpdateCoupon(String _name, String _number, String _coupon1, String _coupon2, String insertName, String insertNumber) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE CouponList SET name='" + _name + "', number='" + _number + "', coupon1='" + _coupon1 + "', coupon2='" + _coupon2 + "' WHERE name='" + insertName + "' AND number='" + insertNumber + "';");
-    }
-
 
     // DELETE 문 (데이터베이스 테이블 내용을 삭제한다)
     // 입력된 이름과 번호의 줄 삭제
@@ -287,29 +241,15 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM CouponList " +
                 "WHERE name='" + insertName + "' AND number='" + insertNumber + "';");
+        db.execSQL("DROP TABLE " + insertName + insertNumber + ";");
     }
 
+
+    //쿠폰 추가할 때 이미 있는 쿠폰인지 확인할 수 있게 해주는 함수
     public boolean CheckContent(String _name, String _number) {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM CouponList WHERE name='"+ _name +"' AND number='"+ _number +"';", null);
-
-        Boolean bool;
-
-        if(cursor.getCount() != 0) {
-            bool = true;
-        }
-        else {
-            bool = false;
-        }
-
-        return bool;
-    }
-
-    public boolean CheckLogContent(String _name, String _number) {
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM UseLog WHERE name='"+ _name +"' AND number='"+ _number +"';", null);
 
         Boolean bool;
 

@@ -83,6 +83,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     String coupon1 = couponItem.getCoupon1();
                     String coupon2 = couponItem.getCoupon2();
 
+                    mDBHelper.CreateLogTable(name, number);
+
                     Intent intent = new Intent(mContext, Coupon_dialog.class);
 
                     intent.putExtra("name", name);

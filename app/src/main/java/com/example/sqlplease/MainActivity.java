@@ -62,21 +62,23 @@ public class MainActivity extends AppCompatActivity {
         mTv_count = findViewById(R.id.tv_count);
         mCouponItems = new ArrayList<>();
 
+
         // load recent db
         LoadRecentDB();
         setCount();
 
-        mDBHelper.InitLog();
 
+        //리스트 가나다 순 정렬 설정
         list = new ArrayList<String>();
-
         settingList();
 
-        final AutoCompleteTextView autocompleteTextview = (AutoCompleteTextView) findViewById(R.id.et_search_name);
 
+        //검색 자동완성 텍스트 뷰 설정
+        final AutoCompleteTextView autocompleteTextview = (AutoCompleteTextView) findViewById(R.id.et_search_name);
         autocompleteTextview.setAdapter(new ArrayAdapter<String>(this, R.layout.search_suggest, list));
 
 
+        //검색 버튼
         mBtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //새로고침 버튼
         mBtn_reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //삭제 버튼
         mBtn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //추가 버튼
         mBtn_write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    //db불러오기
     private void LoadRecentDB() {
         // 저장 되어있던 데이터를 가져옴
         mCouponItems = mDBHelper.getCouponList();
@@ -208,12 +218,16 @@ public class MainActivity extends AppCompatActivity {
         mRv_coupon.setAdapter(mAdapter);
     }
 
+
+    //쿠폰 갯수 불러오기
     private void setCount() {
         int count = mDBHelper.getCouponCount();
         String count_Text = Integer.toString(count);
         mTv_count.setText(count_Text);
     }
 
+
+    //리스트 정렬
     private void settingList() {
         list = mDBHelper.getCouponName();
         Collections.sort(list);

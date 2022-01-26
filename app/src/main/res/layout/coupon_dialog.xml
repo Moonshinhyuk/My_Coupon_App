@@ -313,4 +313,22 @@
         app:layout_constraintStart_toEndOf="@+id/tv_log_explain"
         app:layout_constraintTop_toTopOf="@+id/tv_log_explain" />
 
+    <TextView
+        android:id="@+id/tv_use1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="false"
+        android:textColor="#FFF8E1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_use2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="false"
+        android:textColor="#FFF8E1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
